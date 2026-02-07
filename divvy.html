@@ -1016,7 +1016,7 @@ body {
         <div class="avatar avatar-sm" id="sidebar-avatar" style="background:var(--accent);">Y</div>
         <span class="sidebar-user-name" id="sidebar-name">You</span>
       </div>
-      <div class="sidebar-actions">
+      <div class="sidebar-actions" id="sidebar-actions">
         <button onclick="exportData()" title="Export data">Export</button>
         <button onclick="showImportModal()" title="Import data">Import</button>
         <button onclick="shareLink()" title="Copy share link" id="share-btn">Share</button>
@@ -2488,6 +2488,9 @@ function updateSidebar() {
   document.getElementById('sidebar-avatar').style.background = av.color;
   document.getElementById('sidebar-avatar').textContent = av.initial;
   document.getElementById('sidebar-name').textContent = getRawName(viewingAs);
+  if (isSharedSession) {
+    document.getElementById('sidebar-actions').style.display = 'none';
+  }
 }
 
 // ===== KEYBOARD SHORTCUTS =====
