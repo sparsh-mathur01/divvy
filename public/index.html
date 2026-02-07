@@ -2376,6 +2376,22 @@ function confirmSettle() {
 }
 
 function recordSettlement(from, to, amount) {
+  const fromName = getRawName(from);
+  const toName = getRawName(to);
+  showModal(`
+    <div class="modal-header"><div class="modal-title">Confirm Settlement</div></div>
+    <div class="modal-body" style="text-align:center;padding:24px 16px;">
+      <p style="font-size:1.05rem;margin-bottom:8px;"><strong>${escHtml(fromName)}</strong> pays <strong>${escHtml(toName)}</strong></p>
+      <p style="font-size:1.5rem;font-weight:700;color:var(--green);">${fmt(amount)}</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="hideModal()">Cancel</button>
+      <button class="btn btn-green" onclick="executeSettlement('${from}','${to}',${amount})">Confirm</button>
+    </div>
+  `);
+}
+
+function executeSettlement(from, to, amount) {
   state.settlements.push({
     id: uid(),
     from, to,
