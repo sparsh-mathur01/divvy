@@ -46,7 +46,7 @@
   --mobile-nav-height: 70px;
 }
 
-html { font-size: 16px; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
 body {
   font-family: var(--font-body);
   background: var(--bg-deep);
@@ -829,7 +829,38 @@ body {
   font-weight: 600;
 }
 
+/* ===== GLOBAL MOBILE ENHANCEMENTS ===== */
+button, .btn, .nav-item, .mobile-nav-item, .friend-card, .group-card,
+.expense-item.clickable, .picker-person, .member-check, .audit-tab, .split-tab {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+#modal { overscroll-behavior: contain; }
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  #mobile-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+    height: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom));
+  }
+}
+
 /* ===== RESPONSIVE ===== */
+
+/* --- Tablet (769px - 1024px) --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #sidebar { width: 220px; padding: 24px 16px 16px; }
+  #main { margin-left: 220px; padding: 28px 24px 60px; }
+  .sidebar-logo { font-size: 1.5rem; }
+  .sidebar-tagline { font-size: 0.7rem; margin-bottom: 24px; }
+  .nav-item { padding: 10px 12px; font-size: 0.85rem; }
+  .friends-grid { grid-template-columns: repeat(3, 1fr); }
+  .summary-grid { gap: 12px; }
+  .summary-card { padding: 16px 18px; }
+  .summary-amount { font-size: 1.4rem; }
+  .picker-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+}
+
+/* --- Mobile (768px and below) --- */
 @media (max-width: 768px) {
   #sidebar { display: none; }
   #mobile-nav { display: flex; }
@@ -838,12 +869,258 @@ body {
   .friends-grid { grid-template-columns: repeat(2, 1fr); }
   #fab { bottom: calc(var(--mobile-nav-height) + 16px); right: 16px; }
   .form-row { flex-direction: column; }
+  .form-row > * { flex: none; width: 100%; }
   #toast-container { top: auto; bottom: calc(var(--mobile-nav-height) + 12px); right: 12px; left: 12px; }
+  .toast { min-width: auto; width: 100%; }
   .page-title { font-size: 1.5rem; }
   .summary-amount { font-size: 1.4rem; }
+
+  /* Touch targets (44px minimum) */
+  .btn-icon { width: 44px; height: 44px; }
+  .btn-sm { padding: 10px 16px; font-size: 0.82rem; min-height: 44px; }
+  .friend-card-delete, .group-card-delete { width: 44px; height: 44px; }
+
+  /* Mobile nav text fix */
+  .mobile-nav-item { font-size: 0.75rem; padding: 8px 10px; min-width: 44px; min-height: 44px; }
+  .mobile-nav-item .mob-icon { font-size: 1.4rem; }
+
+  /* Modal: bottom-sheet pattern */
+  #modal-overlay { padding: 12px; align-items: flex-end; }
+  #modal {
+    padding: 20px;
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .modal-title { font-size: 1.15rem; }
+
+  /* Member picker viewport-relative */
+  .member-picker { max-height: 35vh; }
+
+  /* Typography scaling */
+  .page-subtitle { font-size: 0.82rem; }
+  .section-title { font-size: 1rem; }
+  .card-title { font-size: 0.95rem; }
+  .expense-desc { font-size: 0.88rem; }
+  .balance-name { font-size: 0.88rem; }
+
+  /* Settle items wrap */
+  .settle-item { flex-wrap: wrap; gap: 10px; padding: 14px; }
+
+  /* Onboarding */
+  .onboard-logo { font-size: 2.8rem; }
+  .onboard-subtitle { font-size: 0.95rem; margin-bottom: 28px; }
+
+  /* Perspective picker */
+  .picker-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+  .picker-person { padding: 16px 10px; }
+  .picker-title { font-size: 1.35rem; }
+  .picker-subtitle { font-size: 0.88rem; margin-bottom: 24px; }
+
+  /* Audit items */
+  .audit-action-icon { width: 36px; height: 36px; min-width: 36px; }
+  .audit-desc { font-size: 0.85rem; }
+
+  /* Empty state */
+  .empty-state { padding: 40px 16px; }
+  .empty-icon { font-size: 2.5rem; }
+
+  /* Summary card padding */
+  .summary-card { padding: 16px 18px; }
+
+  /* Prevent iOS zoom on input focus */
+  .form-input, .form-select, textarea.form-input { font-size: max(0.92rem, 16px); }
 }
+
+/* --- Small phones (480px and below) --- */
 @media (max-width: 480px) {
-  .friends-grid { grid-template-columns: 1fr 1fr; }
+  #main { padding: 16px 12px 96px; }
+
+  /* Friends grid */
+  .friends-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .friend-card { padding: 14px 10px; gap: 8px; }
+  .friend-card .avatar { width: 44px; height: 44px; font-size: 1rem; }
+  .friend-card-name { font-size: 0.88rem; }
+
+  /* Summary */
+  .summary-amount { font-size: 1.3rem; }
+  .summary-label { font-size: 0.72rem; }
+  .summary-card { padding: 14px 16px; }
+
+  /* Page header */
+  .page-title { font-size: 1.35rem; }
+  .page-header { margin-bottom: 20px; }
+
+  /* Settle items: stack vertically */
+  .settle-item { flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px; }
+  .settle-item .avatar-sm { width: 28px; height: 28px; }
+  .settle-amount { margin-left: auto; align-self: flex-end; }
+  .settle-item .btn-sm { width: 100%; justify-content: center; }
+
+  /* Balance items */
+  .balance-item { padding: 12px; gap: 10px; }
+  .balance-amount { font-size: 0.95rem; }
+
+  /* Expense items */
+  .expense-item { padding: 12px; gap: 10px; }
+  .expense-icon { width: 38px; height: 38px; font-size: 1.15rem; }
+  .expense-amount { font-size: 0.92rem; }
+  .expense-your-share { font-size: 0.72rem; }
+  .expense-meta { font-size: 0.72rem; }
+
+  /* Modal: near full-screen */
+  #modal-overlay { padding: 0; }
+  #modal {
+    max-height: 100vh;
+    max-height: 100dvh;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 18px 16px;
+  }
+
+  /* Onboarding */
+  .onboard-logo { font-size: 2.5rem; }
+  .onboard-subtitle { font-size: 0.88rem; margin-bottom: 24px; }
+  .onboard-card .form-input { font-size: 1rem; padding: 12px; }
+
+  /* Perspective picker */
+  .picker-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+  .picker-person .avatar { width: 40px; height: 40px; font-size: 1rem; }
+  .picker-person-name { font-size: 0.82rem; }
+
+  /* Sections */
+  .section { margin-bottom: 24px; }
+
+  /* Buttons */
+  .btn { padding: 10px 14px; font-size: 0.84rem; }
+
+  /* Group cards */
+  .group-card { padding: 16px; }
+  .group-emoji { width: 38px; height: 38px; font-size: 1.2rem; }
+  .group-card-name { font-size: 0.95rem; }
+
+  /* FAB */
+  #fab { width: 52px; height: 52px; font-size: 1.5rem; right: 12px; }
+
+  /* Audit items */
+  .audit-item { padding: 10px 12px; gap: 10px; }
+  .audit-action-icon { width: 32px; height: 32px; min-width: 32px; font-size: 0.9rem; }
+  .audit-desc { font-size: 0.82rem; }
+  .audit-meta { font-size: 0.7rem; }
+  .audit-tab { padding: 8px 8px; font-size: 0.8rem; }
+  .split-tab { padding: 8px 6px; font-size: 0.78rem; }
+
+  /* Tags */
+  .tag { font-size: 0.68rem; padding: 3px 8px; }
+
+  /* Readonly banner */
+  .readonly-banner { padding: 10px 12px; font-size: 0.82rem; gap: 8px; }
+
+  /* Expense detail modal */
+  .expense-detail-icon { width: 40px; height: 40px; font-size: 1.3rem; }
+  .expense-detail-title { font-size: 1rem; }
+  .expense-detail-amount { font-size: 1.2rem; margin: 12px 0; }
+  .expense-detail-split { padding: 6px 10px; font-size: 0.82rem; }
+}
+
+/* --- Tiny phones (360px and below, e.g. iPhone SE) --- */
+@media (max-width: 360px) {
+  /* Friends grid: single column */
+  .friends-grid { grid-template-columns: 1fr; }
+  .friend-card { flex-direction: row; padding: 12px; gap: 12px; }
+  .friend-card .avatar { width: 40px; height: 40px; }
+
+  /* Main padding */
+  #main { padding: 12px 10px 92px; }
+
+  /* Typography */
+  .page-title { font-size: 1.2rem; }
+  .page-subtitle { font-size: 0.78rem; }
+  .summary-amount { font-size: 1.15rem; }
+  .modal-title { font-size: 1.05rem; }
+
+  /* Balance/expense items */
+  .balance-item { padding: 10px; gap: 8px; }
+  .balance-name { font-size: 0.82rem; }
+  .balance-detail { font-size: 0.72rem; }
+  .balance-amount { font-size: 0.9rem; }
+  .expense-item { padding: 10px 8px; gap: 8px; }
+  .expense-icon { width: 34px; height: 34px; font-size: 1rem; }
+  .expense-desc { font-size: 0.82rem; }
+  .expense-amount { font-size: 0.88rem; }
+
+  /* Perspective picker: forced 2 columns */
+  .picker-grid { grid-template-columns: repeat(2, 1fr); }
+  .picker-person { padding: 14px 8px; }
+  .picker-person .avatar { width: 36px; height: 36px; font-size: 0.9rem; }
+  .picker-person-name { font-size: 0.78rem; }
+  .picker-title { font-size: 1.15rem; }
+  .picker-subtitle { font-size: 0.82rem; }
+
+  /* Onboarding */
+  #onboarding { padding: 16px; }
+  .onboard-logo { font-size: 2.2rem; }
+  .onboard-subtitle { font-size: 0.82rem; margin-bottom: 20px; }
+
+  /* Modal: edge-to-edge */
+  #modal { padding: 16px 12px; }
+  .modal-footer { flex-direction: column; }
+  .modal-footer .btn { width: 100%; }
+
+  /* Mobile nav: slimmer */
+  .mobile-nav-item { font-size: 0.7rem; padding: 6px 6px; }
+  .mobile-nav-item .mob-icon { font-size: 1.2rem; }
+  #mobile-nav { height: 64px; padding: 0 4px; }
+
+  /* Group cards */
+  .group-emoji { width: 34px; height: 34px; font-size: 1rem; }
+  .group-card-name { font-size: 0.9rem; }
+  .group-card-members { font-size: 0.72rem; }
+
+  /* Buttons */
+  .btn { padding: 9px 12px; font-size: 0.8rem; }
+  .btn-sm { padding: 8px 12px; font-size: 0.78rem; }
+
+  /* Forms: bigger tap targets */
+  .form-input, .form-select { padding: 12px; font-size: 1rem; }
+  .member-check { padding: 10px; }
+
+  /* Readonly banner */
+  .readonly-banner { flex-direction: column; text-align: center; padding: 12px; }
+}
+
+/* --- Landscape phones --- */
+@media (max-height: 500px) and (orientation: landscape) {
+  #mobile-nav { height: 50px; }
+  .mobile-nav-item { font-size: 0.68rem; gap: 2px; }
+  .mobile-nav-item .mob-icon { font-size: 1.1rem; }
+  #main { padding-bottom: 70px; }
+  #fab { bottom: 62px; }
+  #modal-overlay { align-items: center; padding: 8px; }
+  #modal { max-height: 95vh; max-height: 95dvh; border-radius: var(--radius-lg); }
+  #onboarding { padding: 12px; }
+  .onboard-logo { font-size: 2rem; margin-bottom: 4px; }
+  .onboard-subtitle { font-size: 0.85rem; margin-bottom: 16px; }
+  .summary-grid { grid-template-columns: repeat(3, 1fr); }
+  .picker-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  .picker-title { font-size: 1.2rem; }
+  .picker-subtitle { margin-bottom: 16px; }
+  .page-header { margin-bottom: 16px; }
+  .page-title { font-size: 1.3rem; }
+  #toast-container { bottom: 58px; }
+  .empty-state { padding: 24px 16px; }
+  .empty-icon { font-size: 2rem; margin-bottom: 8px; }
+}
+
+/* --- Touch feedback (touch devices only) --- */
+@media (hover: none) and (pointer: coarse) {
+  .friend-card:active { transform: scale(0.97); }
+  .group-card:active { transform: scale(0.98); }
+  .expense-item.clickable:active { background: var(--bg-elevated); }
+  .balance-item:active { background: var(--bg-elevated); }
+  .picker-person:active { transform: scale(0.95); background: var(--bg-elevated); }
+  .mobile-nav-item:active { opacity: 0.7; }
+  .btn:active { transform: scale(0.95); }
+  .friend-card-delete, .group-card-delete { display: flex; }
 }
 
 /* ===== SETTLED-ALL STATE ===== */
