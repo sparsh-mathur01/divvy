@@ -133,6 +133,12 @@ body {
 }
 .sidebar-user .avatar-sm { width: 32px; height: 32px; font-size: 0.8rem; }
 .sidebar-user-name { font-size: 0.85rem; font-weight: 600; }
+.sidebar-credits {
+  font-size: 0.7rem; color: var(--text-muted); text-align: center;
+  padding-top: 8px; border-top: 1px solid var(--border-subtle); opacity: 0.7;
+}
+.sidebar-credits a { color: var(--lavender); text-decoration: none; }
+.sidebar-credits a:hover { text-decoration: underline; opacity: 1; }
 .sidebar-actions { display: flex; gap: 6px; }
 .sidebar-actions button {
   flex: 1;
@@ -1014,6 +1020,9 @@ body {
         <button onclick="exportData()" title="Export data">Export</button>
         <button onclick="showImportModal()" title="Import data">Import</button>
         <button onclick="shareLink()" title="Copy share link" id="share-btn">Share</button>
+      </div>
+      <div class="sidebar-credits">
+        Built by <a href="https://www.linkedin.com/in/sparsh-mathur/" target="_blank" rel="noopener">Sparsh Mathur</a>
       </div>
     </div>
   </aside>
